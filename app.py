@@ -20,7 +20,7 @@ st.set_page_config(
 )
 
 # ── constants ──────────────────────────────────────────────────────────────────
-MODEL = os.getenv("GEMINI_MODEL", "gemini-2.0-flash")
+MODEL = os.getenv("GEMINI_MODEL", "gemini-3.8-flash")
 NOT_FOUND = "Not found in the document."
 RETRIEVAL_THRESHOLD = 0.08
 

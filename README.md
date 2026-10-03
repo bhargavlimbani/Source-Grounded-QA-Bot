@@ -40,7 +40,7 @@ export GEMINI_API_KEY="your_api_key"
 streamlit run app.py
 ```
 
-Open the local URL printed by Streamlit. Set `GEMINI_MODEL` to override the default model (`gemini-2.0-flash`), if needed.
+Open the local URL printed by Streamlit. Set `GEMINI_MODEL` to override the default model (`gemini-3.8-flash`), if needed.
 
 ## Use the app
 
@@ -74,7 +74,7 @@ These checks help keep answers tied to the uploaded material, but they do not gu
 ## Configuration and security
 
 - Provide `GEMINI_API_KEY` through your shell environment. Do not put API keys in source code or commit them to Git.
-- `GEMINI_MODEL` is optional and defaults to `gemini-2.0-flash`.
+- `GEMINI_MODEL` is optional and defaults to `gemini-3.8-flash`.
 - Uploaded files are processed in the app session; this repository does not include source documents.
 - The local Python virtual environment and common secret files are excluded by `.gitignore`.
 

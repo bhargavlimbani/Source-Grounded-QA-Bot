@@ -489,8 +489,32 @@ def call_gemini(prompt):
     if not api_key:
         raise RuntimeError("GEMINI_API_KEY is not set. Set it before running the app.")
     client = genai.Client(api_key=api_key)
-    response = client.models.generate_content(model=MODEL, contents=prompt)
-    return (response.text or "").strip()
+    try:
+        response = client.models.generate_content(model=MODEL, contents=prompt)
+        return (response.text or "").strip()
+    except Exception as exc:
+        err = str(exc)
+        if "429" in err or "RESOURCE_EXHAUSTED" in err:
+            raise RuntimeError(
+                "⚠️ API quota exceeded — free tier allows only 20 requests/day for this model.\n\n"
+                "**Options to fix this:**\n"
+                "1. Wait ~16 hours for the quota to reset automatically.\n"
+                "2. Get a new API key from a different Google account at "
+                "https://aistudio.google.com/apikey\n"
+                "3. Enable billing at https://ai.dev/rate-limit to remove the limit."
+            )
+        if "404" in err or "NOT_FOUND" in err:
+            raise RuntimeError(
+                f"Model '{MODEL}' not found. "
+                "Set the GEMINI_MODEL environment variable to a valid model name, "
+                "e.g. gemini-3.8-flash"
+            )
+        if "401" in err or "403" in err or "API_KEY_INVALID" in err:
+            raise RuntimeError(
+                "Invalid or expired API key. "
+                "Check your GEMINI_API_KEY environment variable."
+            )
+        raise
 
 
 # ══════════════════════════════════════════════════════════════════════════════
